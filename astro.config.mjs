@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from "@tailwindcss/vite";
 import pages from 'astro-pages';
+import node from '@astrojs/node';
 
 const groupPattern = (/\/?\([^/]+?\)/g);
 
@@ -15,6 +16,9 @@ export default defineConfig({
         plugins: [tailwindcss()]
     },
     output: "server",
+        adapter: node({
+            mode: 'standalone'
+        }),
     integrations: [
         react(),
         // Pages

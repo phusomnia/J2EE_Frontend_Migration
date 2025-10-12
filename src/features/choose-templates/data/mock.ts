@@ -7,6 +7,49 @@ function formatedDate(date = new Date()): string
     return `${day}-${month}-${year}`;
 }
 
+export type Education = {
+    Id: string;
+    Institution: string;
+    Degree: string;
+    StartDate: string;
+    EndDate: string;
+};
+
+export type Skill = {
+    Id: string;
+    SkillName: string;
+    ProficiencyLevel: string;
+};
+
+export type Project = {
+    Id: string;
+    ProjectName: string;
+    Description: string;
+    StartDate: string;
+    EndDate: string;
+};
+
+export type SocialLink = {
+    Id: string;
+    Platform: string;
+    Url: string;
+};
+
+export type Resume = {
+    Id: string;
+    Title: string;
+    FirstName: string;
+    LastName: string;
+    Address: string;
+    ImageProfile: string;
+    AccountId: string;
+    CreatedAt: string;
+    Education: Education[];
+    Skill: Skill[];
+    Project: Project[];
+    SocialLink: SocialLink[];
+};
+
 export const mockResume = [
     {
         Id: crypto.randomUUID(),
@@ -14,6 +57,8 @@ export const mockResume = [
         FirstName: "Nguyễn",
         LastName: "Văn A",
         Address: "Đường số ABC",
+        Email: "abc@gmail.com",
+        Phone: "0999777888",
         ImageProfile: "https://nairametrics.com/wp-content/uploads/2019/07/CV.jpg",
         AccountId: crypto.randomUUID(),
         CreatedAt: formatedDate(new Date()),

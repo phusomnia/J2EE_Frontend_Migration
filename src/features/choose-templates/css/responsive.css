@@ -16,7 +16,6 @@
   }
 }
 
-/* Khi chiều rộng màn hình từ 1920px trở lên */
 @media (min-width: 1000px) {
   .container {
     flex-wrap: wrap;

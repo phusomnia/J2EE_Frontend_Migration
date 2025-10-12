@@ -13,7 +13,10 @@ export default defineConfig({
         port: 3000
     },
     vite: {
-        plugins: [tailwindcss()]
+        plugins: [tailwindcss()],
+        optimizeDeps: { 
+            exclude: ['debug', 'class-variance-authority'], 
+        },
     },
     output: "server",
         adapter: node({

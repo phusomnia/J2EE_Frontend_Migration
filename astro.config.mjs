@@ -1,27 +1,27 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import pages from 'astro-pages';
-import node from '@astrojs/node';
+import pages from "astro-pages";
+import node from "@astrojs/node";
 
-const groupPattern = (/\/?\([^/]+?\)/g);
+const groupPattern = /\/?\([^/]+?\)/g;
 
 // https://astro.build/config
 export default defineConfig({
     server: {
-        port: 3000
+        port: 3000,
     },
     vite: {
         plugins: [tailwindcss()],
-        optimizeDeps: { 
-            exclude: ['debug', 'class-variance-authority'], 
+        optimizeDeps: {
+            exclude: ["debug", "class-variance-authority"],
         },
     },
-    output: "server",
-        adapter: node({
-            mode: 'standalone'
-        }),
+    output: "static",
+    adapter: node({
+        mode: "standalone",
+    }),
     integrations: [
         react(),
         // Pages
@@ -31,7 +31,7 @@ export default defineConfig({
                 const group = pattern.replace(groupPattern, "");
                 return group;
             },
-            log: "verbose"
-        })
-    ]
+            log: "verbose",
+        }),
+    ],
 });

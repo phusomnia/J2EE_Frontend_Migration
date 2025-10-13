@@ -1,12 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { ScaleProvider } from "@/context/ScaleContext";
 import { TemplateLayout } from "@/features/choose-templates/ChooseTemplate";
 import { TemplateA } from "@/features/choose-templates/component/TemplateA";
 import { FormStore } from "@/stores/FormStore";
 import { UrlHandler } from "@/utils/Handler";
 import { Icon } from "@radix-ui/react-select";
-import { useEffect } from "react";
 
 export default function SocialLinkLayout(props: any) {
     const { formValue, setFormValue, handleDeleteValue, addItem } = FormStore();

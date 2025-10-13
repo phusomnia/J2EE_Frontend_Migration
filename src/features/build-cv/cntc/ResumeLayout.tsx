@@ -1,9 +1,7 @@
-import { Input } from "@/components/ui/input";
 import { ScaleProvider } from "@/context/ScaleContext";
 import { TemplateLayout } from "@/features/choose-templates/ChooseTemplate";
 import { TemplateA } from "@/features/choose-templates/component/TemplateA";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import * as z from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

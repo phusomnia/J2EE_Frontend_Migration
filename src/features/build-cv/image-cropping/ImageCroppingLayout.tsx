@@ -1,6 +1,5 @@
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useDialogStore } from "@/stores/DialogStore";
 import { useRef, useState, useCallback, useEffect } from "react";
 import ReactCrop, { type Crop, type PixelCrop } from "react-image-crop";

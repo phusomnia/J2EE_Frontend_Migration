@@ -238,12 +238,16 @@ export function TemplateA({ data }: any) {
                                     : data.SocialLink.map((link: any) => (
                                           <li
                                               key={link.Id}
-                                              className="break-words"
+                                              className="break-words flex"
                                               style={{
                                                   fontSize: size.paragraph,
                                               }}
                                           >
-                                              <span>{link.Platform}</span>:{" "}
+                                              <div className="mr-[2px]">
+                                                  {link.Platform
+                                                      ? `${link.Platform}: `
+                                                      : null}
+                                              </div>
                                               <a
                                                   href={link.Url}
                                                   className="text-blue-600 hover:underline"
@@ -272,7 +276,7 @@ export function TemplateA({ data }: any) {
                                 className="font-bold"
                                 style={{ fontSize: size.sectionTitle }}
                             >
-                                Projects
+                                Dự án
                             </div>
 
                             <ul className="">
@@ -287,7 +291,7 @@ export function TemplateA({ data }: any) {
                                           >
                                               <div className="font-bold">
                                                   - {project.ProjectName} (
-                                                  {project.StartDate} –{" "}
+                                                  {project.StartDate} – {" "}
                                                   {project.EndDate})
                                               </div>
                                               <p className="break-words overflow-x-auto">

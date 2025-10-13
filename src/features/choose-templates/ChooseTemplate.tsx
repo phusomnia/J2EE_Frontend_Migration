@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useToggle } from "@/hooks/useToggle";
 import { mockResume } from "./data/mock";
-import { Modal } from "@/components/modal";
+import { Modal } from "@/components/Modal";
 import { ScaleProvider, useScaleContext } from "@/context/ScaleContext";
 import { ColorProvider } from "@/context/ColorContext";
 import { TemplateA } from "./component/TemplateA";
 import "./css/responsive.css";
+import { useDialogStore } from "@/stores/DialogStore";
 
 export default function ChooseTemplateLayout() {
     return (
@@ -21,9 +22,7 @@ export default function ChooseTemplateLayout() {
 }
 
 export function TemplateSelector() {
-    const [isOpen, toggleModal] = useToggle(false);
     const items = [1, 2, 3, 4, 5];
-
     return (
         <>
             <div className="bg-amber-50">
@@ -36,14 +35,14 @@ export function TemplateSelector() {
                         <div key={item}>
                             <ScaleProvider scale={0.25}>
                                 <TemplateLayout>
-                                    <TemplateCard toggleModal={toggleModal} />
+                                    <TemplateCard />
                                 </TemplateLayout>
                             </ScaleProvider>
                         </div>
                     ))}
                 </div>
 
-                <Modal isOpen={isOpen} toggleModal={toggleModal}>
+                <Modal>
                     <ScaleProvider scale={0.5}>
                         <TemplateDetail />
                     </ScaleProvider>
@@ -99,7 +98,8 @@ function TemplateDetail() {
                     <div className="text-4xl">Hiện đại</div>
                     <ul>
                         <div>
-                            <span>&#10003;</span> Tối ưu hóa cho ATS (Hệ thống theo dõi ứng viên)
+                            <span>&#10003;</span> Tối ưu hóa cho ATS (Hệ thống
+                            theo dõi ứng viên)
                         </div>
                         <div>
                             <span>&#10003;</span> CV 2 cột
@@ -148,8 +148,8 @@ export function TemplateLayout({ children }: any) {
     );
 }
 
-export function TemplateCard({ toggleModal }: any) {
-    const scale = useScaleContext();
+export function TemplateCard() {
+    const { toggleModal } = useDialogStore();
 
     return (
         <>

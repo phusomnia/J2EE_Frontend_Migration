@@ -1,7 +1,7 @@
 ---
 import RootLayout from "@/layouts/RootLayout.astro";
-import LandingPage from "./landing-page/LandingPage";
+import LandingPageLayout from "./landing-page/LandingPageLayout";
 ---
 <RootLayout>
-    <LandingPage/>
+    <LandingPageLayout client:only="react"/>
 </RootLayout>

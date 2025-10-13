@@ -18,7 +18,7 @@ export default defineConfig({
             exclude: ["debug", "class-variance-authority"],
         },
     },
-    output: "static",
+    output: "server",
     adapter: node({
         mode: "standalone",
     }),

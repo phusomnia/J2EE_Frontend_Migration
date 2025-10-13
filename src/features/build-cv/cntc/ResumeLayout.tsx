@@ -1,19 +1,16 @@
-import {
-    Form,
-    FormControl,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ScaleProvider } from "@/context/ScaleContext";
 import { TemplateLayout } from "@/features/choose-templates/ChooseTemplate";
 import { TemplateA } from "@/features/choose-templates/component/TemplateA";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as z from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FormStore } from "@/stores/FormStore";
+import { FormInput } from "@/components/FormInput";
+import { Form } from "@/components/ui/form";
+import { UrlHandler } from "@/utils/Handler";
 
 const formSchema = z.object({
     FirstName: z.string().min(1, { error: "Tên không được để trống" }),
@@ -25,21 +22,16 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function Section() {
-    const [formValue, setFormValue] = useState({
-        Id: crypto.randomUUID(),
-        Title: "",
-        FirstName: "",
-        LastName: "",
-        Address: "",
-        Phone: "",
-        Email: "",
-        ImageProfile: "",
-        Education: [],
-        Skill: [],
-        Project: [],
-        SocialLink: [],
-    });
+export default function ResumeLayout() {
+    return (
+        <>
+            <Resume />
+        </>
+    );
+}
+
+export function Resume() {
+    const { formValue, setFormValue } = FormStore();
 
     const form = useForm<FormData>({
         resolver: zodResolver(formSchema),
@@ -58,23 +50,37 @@ export function Section() {
 
     function onSubmit(data: FormData) {
         console.log("Validate data: ", data);
+        let socialLinkId = "";
+        if (!formValue.SocialLink || formValue.SocialLink.length === 0) {
+            socialLinkId = crypto.randomUUID();
+            setFormValue("SocialLink", [
+                {
+                    Id: socialLinkId,
+                    Platform: "",
+                    Url: "",
+                },
+            ]);
+        } else {
+            socialLinkId = formValue.SocialLink[0].Id;
+        }
+        UrlHandler.navigate("/build-cv/social-link/detail/" + socialLinkId);
     }
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { id, value } = e.target;
-        setFormValue((prev) => ({
-            ...prev,
-            [id]: value,
-        }));
+        setFormValue(id, value);
     }
 
     return (
         <>
             <div className="flex">
                 {/* Sidebar */}
-                <div className="sidebar w-[250px] bg-amber-200">
+                <div className="sidebar w-[250px] bg-gray-100 text-center">
                     <div>
-                        <a href="/build-cv/section">Thông tin cá nhân</a>
+                        <a href="/build-cv/cntc">Thông tin cá nhân</a>
+                    </div>
+                    <div>
+                        <a href="/build-cv/social-link">Thông tin liên kết</a>
                     </div>
                 </div>
 
@@ -147,69 +153,28 @@ export function Section() {
                 </div>
 
                 {/* Template Review */}
-                <div className="bg-amber-100 flex top-4 pt-[100px] w-[50%] h-[940px]">
-                    <div className="template-review mx-auto z-10">
+                <div className="bg-gray-100">
+                    <div className="template-review mx-auto">
                         <ScaleProvider scale={0.7}>
                             <TemplateLayout>
                                 <TemplateA data={formValue} />
                             </TemplateLayout>
                         </ScaleProvider>
                     </div>
+
+                    <div className="text-center">
+                        <a
+                            className="underline"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                UrlHandler.navigate("/choose-template");
+                            }}
+                        >
+                            Change template
+                        </a>
+                    </div>
                 </div>
             </div>
-        </>
-    );
-}
-
-function FormInput({
-    className,
-    control,
-    name,
-    type = "text",
-    placeHolder,
-    handleChange,
-    clearErrors,
-    maxLength = 100,
-}: any) {
-    return (
-        <>
-            <Controller
-                name={name}
-                control={control}
-                render={({ field, fieldState }) => {
-                    return (
-                        <FormItem className={"relative " + className}>
-                            <FormLabel>{placeHolder}</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type={type}
-                                    className={
-                                        fieldState.error?.message &&
-                                        "border-red-500"
-                                    }
-                                    id={name}
-                                    placeholder={placeHolder}
-                                    value={field.value}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                        handleChange(e);
-                                        clearErrors(name);
-                                    }}
-                                    onFocus={() => {
-                                        clearErrors(name);
-                                    }}
-                                    maxLength={maxLength}
-                                />
-                            </FormControl>
-                            {
-                                <FormMessage className="absolute top-full">
-                                    {fieldState.error?.message}
-                                </FormMessage>
-                            }
-                        </FormItem>
-                    );
-                }}
-            />
         </>
     );
 }

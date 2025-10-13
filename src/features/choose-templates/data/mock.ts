@@ -59,7 +59,7 @@ export const mockResume = [
         Address: "Đường số ABC",
         Email: "abc@gmail.com",
         Phone: "0999777888",
-        ImageProfile: "https://nairametrics.com/wp-content/uploads/2019/07/CV.jpg",
+        ImageProfile: "https://res.cloudinary.com/duxhpwegs/image/upload/v1760258356/CV_szb6he.jpg",
         AccountId: crypto.randomUUID(),
         CreatedAt: formatedDate(new Date()),
         Education: [

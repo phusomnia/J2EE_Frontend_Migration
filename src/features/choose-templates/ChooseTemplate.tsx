@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useToggle } from "@/hooks/useToggle";
 import { mockResume } from "./data/mock";
-import { Modal } from "@/components/Modal";
+import { Modal } from "@/components/_Modal";
 import { ScaleProvider, useScaleContext } from "@/context/ScaleContext";
 import { ColorProvider } from "@/context/ColorContext";
 import { TemplateA } from "./component/TemplateA";

@@ -1,4 +1,4 @@
-import { Modal } from "@/components/Modal";
+import { Modal } from "@/components/_Modal";
 import { Button } from "@/components/ui/button";
 import { useDialogStore } from "@/stores/DialogStore";
 import { useRef, useState, useCallback, useEffect } from "react";

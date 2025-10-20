@@ -1,0 +1,5 @@
+interface IFormat {}
+
+class TimeFormat {
+    
+}

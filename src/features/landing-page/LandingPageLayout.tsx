@@ -1,6 +1,10 @@
+import { Footer } from "@/components/footer/footer";
+import { Header } from "@/components/header/header";
+
 export default function LandingPageLayout() {
     return (
         <>
+            <Header />
             <LandingPage />
         </>
     );
@@ -9,217 +13,162 @@ export default function LandingPageLayout() {
 export function LandingPage() {
     return (
         <>
-            <div className="h-screen w-screen bg-gray-100">
-                <div className="grid grid-cols-2 mx-auto p-4">
-                    <div className="relative">
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                            Tạo sơ yếu lý lịch
-                        </h1>
-                        <p className="text-lg text-gray-600">
-                            Nhanh chóng có được công việc mơ ước của bạn
-                        </p>
-                        <div className="flex gap-8">
-                            <div className="">
-                                <button className="p-4 rounded-lg bg-orange-500 hover:bg-amber-50 hover:scale-105 transition-transform duration-300">
-                                    Tạo CV
-                                </button>
+            <div className="min-h-screen w-full bg-gradient-to-b from-blue-50 via-white to-purple-50">
+                {/* Hero Section */}
+                <section className="container mx-auto px-4 py-16 md:py-24">
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-8">
+                            <div className="space-y-4">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
+                                    Tạo sơ yếu lý lịch
+                                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> chuyên nghiệp</span>
+                                </h1>
+                                <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+                                    Nhanh chóng có được công việc mơ ước của bạn với những mẫu CV độc đáo và ấn tượng
+                                </p>
                             </div>
-                            <div className="space-y-2">
-                                <div className="">
-                                    <button className="p-4 rounded-lg bg-blue-500 hover:bg-amber-50 hover:scale-105 transition-transform duration-300">
-                                        Nâng cấp cv
+                            
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <button className="px-8 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold hover:from-orange-600 hover:to-orange-700 hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md">
+                                    Tạo CV ngay
+                                </button>
+                                <div className="relative">
+                                    <button className="w-full px-8 py-4 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md">
+                                        Nâng cấp CV với AI
                                     </button>
+                                    <div className="absolute -top-2 -right-2 px-2 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full animate-pulse">
+                                        NEW
+                                    </div>
                                 </div>
-                                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg text-sm text-center">
-                                    hỗ trợ bởi AI
+                            </div>
+
+                            {/* Stats */}
+                            <div className="flex gap-8 pt-4">
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900">10K+</div>
+                                    <div className="text-sm text-gray-600">Người dùng</div>
+                                </div>
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900">50+</div>
+                                    <div className="text-sm text-gray-600">Mẫu thiết kế</div>
+                                </div>
+                                <div>
+                                    <div className="text-3xl font-bold text-gray-900">95%</div>
+                                    <div className="text-sm text-gray-600">Hài lòng</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="relative">
-                        <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary-200 rounded-full filter blur-3xl opacity-30"></div>
-                        <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-purple-300 rounded-full filter blur-3xl opacity-20"></div>
-                        <div className="relative bg-white p-4 rounded-xl shadow-xl transform rotate-2 hover:rotate-0 transition-all">
-                            <img
-                                src=""
-                                alt="style resume example"
-                                className="rounded-lg w-full object-cover h-[400px]"
-                            />
-                            <div className="absolute -bottom-5 -right-5 bg-white p-3 rounded-full shadow-lg transform rotate-12 hover:rotate-0 transition-all"></div>
-                        </div>
-                    </div>
-                </div>
 
-                {/* Features section */}
-                <div className="mx-auto p-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                            Vì sao bạn lại chọn sản phẩm của chúng tôi?
-                        </h2>
-                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                            Tạo ra những bản sơ yếu lý lịch với những mẫu sáng
-                            tạo, giúp hồ sơ bạn trở nên nổi bật hơn
-                        </p>
-                    </div>
-
-                    <div className="grid lg:grid-cols-3 gap-8 mx-auto">
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Thiết kế độc đáo
-                            </h3>
-                            <p className="text-gray-600">
-                                Nhiều mẫu tùy chỉnh, phù hợp với cá tính và
-                                nghành nghề của bạn
-                            </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Tạo mẫu nhanh chóng
-                            </h3>
-                            <p className="text-gray-600">
-                                Tạo sơ yếu lý lịch chuyên nghiệp trong vài phút
-                                với giao diện trực quan và dễ sử dụng của chúng
-                                tôi
-                            </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Thân thiện với ATS
-                            </h3>
-                            <p className="text-gray-600">
-                                Tương thích với hệ thống ATS để vượt qua vòng
-                                sàng lọc tự động
-                            </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Thân thiện với ATS
-                            </h3>
-                            <p className="text-gray-600">
-                                Tương thích với hệ thống ATS để vượt qua vòng
-                                sàng lọc tự động
-                            </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Hỗ trợ đa nền tảng
-                            </h3>
-                            <p className="text-gray-600">
-                                Tải xuống sơ yếu lý lịch của bạn ở định dạng
-                                PDF, PNG hoặc chia sẻ trực tiếp lên mạng xã hội
-                                hoặc các nền tảng việc làm của bạn
-                            </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-2 border border-gray-100">
-                            <h3 className="text-xl font-bold mb-2">
-                                Hỗ trợ bởi AI
-                            </h3>
-                            <p className="text-gray-600">
-                                AI của chúng tôi gợi ý phong cách, màu sắc và bố
-                                cục hoàn hảo dựa trên nghề nghiệp và sở thích
-                                của bạn
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Template showcase */}
-                {/* <div className="">
-
-            </div> */}
-
-                <section className="py-16 md:py-20">
-                    <div className="absolute top-0 left-0 w-96 h-96 bg-primary-500 rounded-full filter blur-3xl opacity-30"></div>
-                    <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary-700 rounded-full filter blur-3xl opacity-20"></div>
-
-                    <div className="container mx-auto px-4 relative z-10">
-                        <div className="max-w-3xl mx-auto text-center text-white">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black">
-                                Chuẩn bị tạo mẫu cho sơ yếu lý lịch chưa?
-                            </h2>
-                            <p className="text-xl mb-8 text-primary-100 text-black">
-                                Hãy gia nhập cùng với 10.000 ứng viên đã tìm
-                                được công việc mơ ước nhờ các mẫu sơ yếu lý lịch
-                                độc đáo của chúng tôi
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button className="px-8 py-4 rounded-lg font-medium text-black hover:bg-primary-50 transform hover:-translate-y-1 transition-all shadow-lg ">
-                                    Bắt đầu xây dựng ngay thôi nào
-                                </button>
-                                <button className="px-8 py-4 border text-black rounded-lg font-medium hover:bg-primary-700 transform hover:-translate-y-1 transition-all">
-                                    Khám phá các mẫu thiết kế cao cấp
-                                </button>
+                        {/* Hero Image */}
+                        <div className="relative">
+                            <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-200 rounded-full filter blur-3xl opacity-30 animate-pulse"></div>
+                            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-purple-300 rounded-full filter blur-3xl opacity-20 animate-pulse delay-75"></div>
+                            <div className="relative bg-white p-6 rounded-2xl shadow-2xl transform hover:rotate-0 rotate-2 transition-all duration-300">
+                                <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl w-full h-[400px] flex items-center justify-center">
+                                    <div className="text-center space-y-2">
+                                        <div className="text-6xl">📄</div>
+                                        <p className="text-gray-500 font-medium">CV Mẫu</p>
+                                    </div>
+                                </div>
+                                <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-full shadow-xl transform hover:rotate-0 rotate-12 transition-all cursor-pointer">
+                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* FOOTER */}
-                {/* <footer className="bg-gray-900 text-gray-300 py-12">
-                <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                        <div>
-                        <h3 className="text-white text-lg font-bold mb-4">Web tạo CV</h3>
-                        <p className="mb-4">Create standout resumes with anime-inspired designs that showcase your personality and professional skills.</p>
-                        <div className="flex gap-4">
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <i className="fa-brands fa-twitter text-xl"></i>
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <i className="fa-brands fa-instagram text-xl"></i>
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                            <i className="fa-brands fa-linkedin text-xl"></i>
-                            </a>
+                {/* Features section */}
+                <section className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+                                Vì sao bạn lại chọn sản phẩm của chúng tôi?
+                            </h2>
+                            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                                Tạo ra những bản sơ yếu lý lịch với những mẫu sáng tạo, 
+                                giúp hồ sơ bạn trở nên nổi bật hơn
+                            </p>
                         </div>
-                        </div>
-                        
-                        <div>
-                        <h4 className="text-white text-md font-bold mb-4">Quick Links</h4>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="">Templates</a></li>
-                            <li><a href="#" className="">Pricing</a></li>
-                            <li><a href="#" className="">Resources</a></li>
-                            <li><a href="#" className="">FAQ</a></li>
-                        </ul>
-                        </div>
-                        
-                        <div>
-                        <h4 className="text-white text-md font-bold mb-4">Legal</h4>
-                        <ul className="space-y-2">
-                            <li><a href="#" className="">Terms of Service</a></li>
-                            <li><a href="#" className="">Privacy Policy</a></li>
-                            <li><a href="#" className="">Cookie Policy</a></li>
-                            <li><a href="#" className="">GDPR Compliance</a></li>
-                        </ul>
-                        </div>
-                        
-                        <div>
-                        <h4 className="text-white text-md font-bold mb-4">Newsletter</h4>
-                        <p className="mb-4">Subscribe to get the latest updates and offers.</p>
-                        <div className="flex">
-                            <input 
-                            type="email" 
-                            placeholder="Your email" 
-                            className="px-4 py-2 bg-gray-800 text-white rounded-l-lg w-full focus:outline-none focus:ring-1 focus:ring-primary-500"
-                            />
-                            <button className="px-4 py-2 bg-primary-600 text-white rounded-r-lg hover:bg-primary-700 transition-colors">
-                            <span className="material-symbols-outlined">send</span>
-                            </button>
-                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="group h-[200px] bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">🎨</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Thiết kế độc đáo
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    Nhiều mẫu tùy chỉnh, phù hợp với cá tính và nghành nghề của bạn
+                                </p>
+                            </div>
+
+                            <div className="group h-[200px] bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">⚡</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Tạo mẫu nhanh chóng
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    Tạo sơ yếu lý lịch chuyên nghiệp trong vài phút với giao diện trực quan
+                                </p>
+                            </div>
+
+                            <div className="group bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-green-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">✅</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Thân thiện với ATS
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    Tương thích với hệ thống ATS để vượt qua vòng sàng lọc tự động
+                                </p>
+                            </div>
+
+                            <div className="group bg-gradient-to-br from-orange-50 to-orange-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-orange-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">📱</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Hỗ trợ đa nền tảng
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    Tải xuống định dạng PDF, PNG hoặc chia sẻ trực tiếp lên mạng xã hội
+                                </p>
+                            </div>
+
+                            <div className="group bg-gradient-to-br from-pink-50 to-pink-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-pink-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">🤖</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Hỗ trợ bởi AI
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    AI gợi ý phong cách, màu sắc và bố cục hoàn hảo dựa trên nghề nghiệp
+                                </p>
+                            </div>
+
+                            <div className="group h-[200px] bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-blue-200">
+                                {/* <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                    <span className="text-2xl">🔒</span>
+                                </div> */}
+                                <h3 className="text-xl font-bold mb-3 text-gray-900">
+                                    Bảo mật cao
+                                </h3>
+                                <p className="text-gray-700 leading-relaxed">
+                                    Dữ liệu của bạn được mã hóa và bảo mật tuyệt đối theo tiêu chuẩn quốc tế
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div className="border-t border-gray-800 pt-8">
-                        <p className="text-center text-sm">© 2023 AI Builder Resume. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer> */}
+                </section>
+                <Footer/>
             </div>
         </>
     );

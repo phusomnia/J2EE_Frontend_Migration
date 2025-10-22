@@ -1,0 +1,8 @@
+---
+import RootLayout from '@/layouts/RootLayout.astro';
+import { SignInLayout } from './SignIn';
+---
+
+<RootLayout>
+  <SignInLayout client:only="react" />
+</RootLayout>

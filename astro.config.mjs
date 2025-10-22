@@ -20,6 +20,13 @@ export default defineConfig({
     define: {
       global: 'globalThis',
     },
+    server: {
+      proxy: {
+        '/api/v1': {
+          target: 'http://localhost:8080',
+        },
+      },
+    },
   },
   output: 'server',
   adapter: node({

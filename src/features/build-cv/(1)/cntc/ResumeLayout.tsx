@@ -1,21 +1,21 @@
-import { ScaleProvider } from '@/context/ScaleContext';
-import { TemplateLayout } from '@/features/choose-templates/ChooseTemplate';
-import { TemplateA } from '@/features/choose-templates/component/TemplateA';
-import { Button } from '@/components/ui/button';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { FormStore } from '@/stores/FormStore';
-import { FormInput } from '@/components/_Form';
-import { Form } from '@/components/ui/form';
-import { UrlHandler } from '@/utils/Handler';
-import { SideBarForm } from '@/components/SideBarForm';
-import { ProgressStepSidebar } from '@/components/ProgressStep';
+import { ScaleProvider } from "@/context/ScaleContext";
+import { TemplateLayout } from "@/features/choose-templates/ChooseTemplate";
+import { TemplateA } from "@/features/choose-templates/component/TemplateA";
+import { Button } from "@/components/ui/button";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FormStore } from "@/stores/FormStore";
+import { FormInput } from "@/components/_Form";
+import { Form } from "@/components/ui/form";
+import { UrlHandler } from "@/utils/Handler";
+import { SideBarForm } from "@/components/SideBarForm";
+import { ProgressStepSidebar } from "@/components/ProgressStep";
 
 const formSchema = z.object({
-  FirstName: z.string().min(1, { error: 'Tên không được để trống' }),
-  LastName: z.string().min(1, { error: 'Họ không được để trống' }),
-  Email: z.email({ error: 'Email không hợp lệ' }),
+  FirstName: z.string().min(1, { error: "Tên không được để trống" }),
+  LastName: z.string().min(1, { error: "Họ không được để trống" }),
+  Email: z.email({ error: "Email không hợp lệ" }),
   Address: z.string().optional(),
   Phone: z.string().optional(),
 });
@@ -42,17 +42,17 @@ function Resume() {
       Address: formValue.Address,
       Phone: formValue.Phone,
     },
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
   });
 
   const { handleSubmit, control, clearErrors } = form;
 
   function onSubmit(data: FormData) {
-    console.log('Validate data: ', data);
-    UrlHandler.navigateNext(formValue, setFormValue, 'Education', {
-      Institution: '',
-      Degree: '',
+    console.log("Validate data: ", data);
+    UrlHandler.navigateNext(formValue, setFormValue, "Education", {
+      Institution: "",
+      Degree: "",
       StartDate: null,
       EndDate: null,
     });
@@ -147,9 +147,9 @@ function Resume() {
           <div className="text-center">
             <a
               className="underline"
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault();
-                UrlHandler.navigate('/choose-template');
+                UrlHandler.navigate("/choose-template");
               }}
             >
               Change template

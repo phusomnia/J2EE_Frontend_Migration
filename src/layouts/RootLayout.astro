@@ -1,14 +1,16 @@
 ---
-import '@/styles/global.css'
+import '@/styles/global.css';
+import { QueryProvider } from './QueryProvider';
 ---
+
 <html lang="vi">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-    </head>
-    <body>
-        <slot/>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <QueryProvider>
+      <slot />
+    </QueryProvider>
+  </body>
 </html>
-
-

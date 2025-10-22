@@ -20,8 +20,8 @@ export function FormInput({
   name,
   type = 'text',
   placeHolder,
-  handleChange,
-  clearErrors,
+  handleChange = () => {},
+  clearErrors = () => {},
   maxLength = 100,
 }: any) {
   return (
@@ -30,7 +30,6 @@ export function FormInput({
         name={name}
         control={control}
         render={({ field, fieldState }) => {
-          console.log(field.value);
           return (
             <FormItem className={'relative ' + className}>
               <FormLabel>{placeHolder}</FormLabel>
@@ -44,7 +43,7 @@ export function FormInput({
                   value={field.value}
                   onChange={e => {
                     field.onChange(e);
-                    handleChange(e);
+                    handleChange;
                     clearErrors(name);
                   }}
                   onFocus={() => {

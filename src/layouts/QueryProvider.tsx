@@ -1,9 +1,9 @@
-import { queryClient, QueryClientProvider } from "@/stores/QueryStore";
+import { queryClient, QueryClientProvider } from '@/lib/ReactQuery';
 
-export default function QueryProvider({ children }: any) {
-    return <>
-        <QueryClientProvider client={queryClient}>
-            {children}
-        </QueryClientProvider>
+export function QueryProvider({ children }: any) {
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </>
+  );
 }

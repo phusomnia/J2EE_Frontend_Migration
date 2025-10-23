@@ -58,7 +58,7 @@ export const mockResume = [
     Email: 'abc@gmail.com',
     Phone: '0999777888',
     ImageProfile:
-      'https://res.cloudinary.com/duxhpwegs/image/upload/v1760258356/CV_szb6he.jpg',
+      'https://res.cloudinary.com/duxhpwegs/image/upload/v1761189147/emacTouhou.png.jpg',
     AccountId: crypto.randomUUID(),
     CreatedAt: formatedDate(new Date()),
     Education: [

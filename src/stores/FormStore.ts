@@ -1,20 +1,21 @@
-import { UrlHandler } from '@/utils/Handler';
-import { it } from 'date-fns/locale';
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { UrlHandler } from "@/utils/Handler";
+import { it } from "date-fns/locale";
+import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
+import image from "@/../public/no_image.png";
 
 export const FormStore = create<any>()(
   persist(
     (set, get) => ({
       formValue: {
         Id: crypto.randomUUID(),
-        Title: '',
-        FirstName: '',
-        LastName: '',
-        Address: '',
-        Phone: '',
-        Email: '',
-        ImageProfile: '',
+        Title: "",
+        FirstName: "",
+        LastName: "",
+        Address: "",
+        Phone: "",
+        Email: "",
+        ImageProfile: image.src,
         Education: [],
         Skill: [],
         Project: [],
@@ -35,11 +36,11 @@ export const FormStore = create<any>()(
         arrayName: string,
         itemId: string,
         key: string,
-        value: any,
+        value: any
       ) => {
         set((state: any) => {
           const setValue = state.formValue[arrayName].map((item: any) =>
-            item.Id === itemId ? { ...item, [key]: value } : item,
+            item.Id === itemId ? { ...item, [key]: value } : item
           );
 
           return {
@@ -73,7 +74,7 @@ export const FormStore = create<any>()(
         set((state: any) => {
           if (state.formValue[arrayName]) {
             const setValue = state.formValue[arrayName].filter(
-              (item: any) => item.Id !== itemId,
+              (item: any) => item.Id !== itemId
             );
 
             return {
@@ -86,14 +87,14 @@ export const FormStore = create<any>()(
         });
       },
       onBackSubmit: (data: FormData, path: string) => {
-        console.log('Validate data: ', data);
+        console.log("Validate data: ", data);
         UrlHandler.navigate(`/build-cv/${path}/`);
       },
     }),
     //
     {
-      name: 'form-storage',
+      name: "form-storage",
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 );

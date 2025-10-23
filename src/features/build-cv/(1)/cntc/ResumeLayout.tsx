@@ -139,7 +139,7 @@ function Resume() {
           <div className="template-review mx-auto">
             <ScaleProvider scale={0.7}>
               <TemplateLayout>
-                <TemplateA data={formValue} />
+                <TemplateA data={formValue} mode="Edit" />
               </TemplateLayout>
             </ScaleProvider>
           </div>

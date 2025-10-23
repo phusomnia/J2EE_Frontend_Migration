@@ -1,8 +1,8 @@
-import { useScaleContext } from '@/context/ScaleContext';
-import { PhoneIconFA, HouseIconFA, MailIconFA } from '@/components/icons/Icons';
-import ImageCroppingLayout from '@/features/build-cv/image-cropping/ImageCroppingLayout';
+import { useScaleContext } from "@/context/ScaleContext";
+import { PhoneIconFA, HouseIconFA, MailIconFA } from "@/components/icons/Icons";
+import ImageCroppingLayout from "@/features/build-cv/image-cropping/_layout";
 
-export function TemplateA({ data }: any) {
+export function TemplateA({ data, mode = "" }: any) {
   const scale = useScaleContext();
 
   const size = {
@@ -36,23 +36,36 @@ export function TemplateA({ data }: any) {
               className="name font-bold"
               style={{ fontSize: `${size.name}px` }}
             >{`${
-              !data ? 'Ho va ten' : `${data.LastName} ${data.FirstName}`
+              !data ? "Họ và tên" : `${data.LastName} ${data.FirstName}`
             }`}</div>
             <div className="title" style={{ fontSize: `${size.title}px` }}>
-              {!data ? '' : data.Title}
+              {!data ? "" : data.Title}
             </div>
           </div>
           {/* IMAGE PROFILE */}
           {data.ImageProfile ? (
             <>
-              <img
-                src={data.ImageProfile}
-                className="rounded-full border-4 border-gray-500 object-contain shadow-lg"
+              <div
+                className="relative group"
                 style={{
                   width: `${size.image.size}px`,
                   height: `${size.image.size}px`,
                 }}
-              />
+              >
+                <img
+                  src={data.ImageProfile}
+                  className="border-2 border-gray-500 object-contain shadow-lg"
+                  style={{
+                    width: `${size.image.size}px`,
+                    height: `${size.image.size}px`,
+                  }}
+                />
+                {mode === "Edit" && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-opacity-50 invisible group-hover:visible transition-opacity duration-300">
+                    <ImageCroppingLayout />
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>
@@ -94,7 +107,7 @@ export function TemplateA({ data }: any) {
                 }}
               >
                 {!data.Address ? (
-                  ''
+                  ""
                 ) : (
                   <>
                     <div
@@ -119,7 +132,7 @@ export function TemplateA({ data }: any) {
                 }}
               >
                 {!data.Phone ? (
-                  ''
+                  ""
                 ) : (
                   <>
                     <div
@@ -144,7 +157,7 @@ export function TemplateA({ data }: any) {
                 }}
               >
                 {!data.Email ? (
-                  ''
+                  ""
                 ) : (
                   <>
                     <div
@@ -171,7 +184,7 @@ export function TemplateA({ data }: any) {
                 Học vấn
               </div>
               {!data.Education
-                ? ''
+                ? ""
                 : data.Education.map((edu: any) => (
                     <div key={edu.Id} className="">
                       <p
@@ -211,7 +224,7 @@ export function TemplateA({ data }: any) {
               </div>
               <ul className="list-disc list-inside">
                 {!data.Skill
-                  ? ''
+                  ? ""
                   : data.Skill.map((sk: any) => (
                       <li
                         key={sk.Id}
@@ -235,7 +248,7 @@ export function TemplateA({ data }: any) {
 
               <ul className="">
                 {!data.SocialLink
-                  ? ''
+                  ? ""
                   : data.SocialLink.map((link: any) => (
                       <li
                         key={link.Id}
@@ -280,7 +293,7 @@ export function TemplateA({ data }: any) {
 
               <div className="">
                 {!data
-                  ? ''
+                  ? ""
                   : data.Project.map((project: any) => (
                       <div
                         key={project.Id}
@@ -289,7 +302,7 @@ export function TemplateA({ data }: any) {
                         }}
                       >
                         <div className="font-bold">
-                          - {project.ProjectName} ({project.StartDate} –{' '}
+                          - {project.ProjectName} ({project.StartDate} –{" "}
                           {project.EndDate})
                         </div>
                         <div
@@ -297,7 +310,7 @@ export function TemplateA({ data }: any) {
                           dangerouslySetInnerHTML={{
                             __html: project.Description.replace(
                               /<ul>/g,
-                              '<ul class="list-disc list-inside">',
+                              '<ul class="list-disc list-inside">'
                             ),
                           }}
                         ></div>

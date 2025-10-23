@@ -43,7 +43,7 @@ export function FormInput({
                   value={field.value}
                   onChange={e => {
                     field.onChange(e);
-                    handleChange;
+                    handleChange ? handleChange(e) : null;
                     clearErrors(name);
                   }}
                   onFocus={() => {

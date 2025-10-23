@@ -1,5 +1,6 @@
 import { useScaleContext } from '@/context/ScaleContext';
 import { PhoneIconFA, HouseIconFA, MailIconFA } from '@/components/icons/Icons';
+import ImageCroppingLayout from '@/features/build-cv/image-cropping/ImageCroppingLayout';
 
 export function TemplateA({ data }: any) {
   const scale = useScaleContext();
@@ -42,14 +43,24 @@ export function TemplateA({ data }: any) {
             </div>
           </div>
           {/* IMAGE PROFILE */}
-          <img
-            src={data.ImageProfile}
-            className="rounded-full border-4 border-gray-500 object-contain shadow-lg"
-            style={{
-              width: `${size.image.size}px`,
-              height: `${size.image.size}px`,
-            }}
-          />
+          {data.ImageProfile ? (
+            <>
+              <img
+                src={data.ImageProfile}
+                className="rounded-full border-4 border-gray-500 object-contain shadow-lg"
+                style={{
+                  width: `${size.image.size}px`,
+                  height: `${size.image.size}px`,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <div>
+                <ImageCroppingLayout />
+              </div>
+            </>
+          )}
         </div>
 
         <div

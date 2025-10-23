@@ -34,7 +34,6 @@ export default defineConfig({
   }),
   integrations: [
     react(),
-    // Pages
     pages({
       dir: 'features',
       pattern: ({ pattern }) => {

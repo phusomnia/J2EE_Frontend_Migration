@@ -6,23 +6,11 @@ import { FormStore } from "@/stores/FormStore";
 import { FormInput } from "@/components/_Form";
 import { Form } from "@/components/ui/form";
 import { queryClient, useMutation } from "@/lib/ReactQuery";
-
-export function SignInLayout() {
-  return (
-    <>
-      <SignIn />
-    </>
-  );
-}
+import { formSchema, type FormData } from "./form/SignUpForm";
+import { useSignIn } from "../api/useAuth";
+import { Spinner } from "@/components/ui/spinner";
 
 export function SignIn() {
-  const formSchema = z.object({
-    username: z.string().min(1, { error: "Tên không được để trống" }),
-    password: z.string().min(1, { error: "Mat khau không được để trống" }),
-  });
-
-  type FormData = z.infer<typeof formSchema>;
-
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -34,34 +22,22 @@ export function SignIn() {
   });
 
   const { handleSubmit, control, clearErrors } = form;
+  const { isError, isPending, isSuccess, mutate } = useSignIn();
 
-  const mutation = useMutation(
-    {
-      mutationFn: async (data: FormData) => {
-        const response = await fetch("http://localhost:8080/api/v1/sign-in", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-          credentials: "include",
-        });
-
-        return response.json();
-      },
-      onSuccess: (data) => {
-        console.log("Sign in successful:", data);
-      },
-      onError: (error) => {
-        console.error("Sign in error:", error);
-      },
-    },
-    queryClient
-  );
-
-  function onSubmit(data: FormData) {
+  function onSubmit(data: any) {
     console.log("Validate data: ", data);
-    mutation.mutate(data);
+    mutate(data);
+  }
+
+  function Status(props: any) {
+    if (props.isPending) {
+      return (
+        <>
+          <Spinner />
+        </>
+      );
+    }
+    return <>{props.name}</>;
   }
 
   return (
@@ -84,7 +60,9 @@ export function SignIn() {
               clearErrors={clearErrors}
             />
             <div className="col-span-2 flex gap-4 mt-4">
-              <Button type="submit">Sign-up</Button>
+              <Button type="submit" disabled={isPending}>
+                <Status isPending={isPending} name={"Đăng nhập"} />
+              </Button>
             </div>
           </form>
         </Form>

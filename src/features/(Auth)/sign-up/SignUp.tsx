@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormInput } from "@/components/_Form";
 import { Form } from "@/components/ui/form";
-import { useSignUp } from "../api/useAuth";
+import { toast } from "sonner";
+import { queryClient, useMutation } from "@/lib/ReactQuery";
 
 export function SignUp() {
   const formSchema = z.object({
@@ -28,6 +29,37 @@ export function SignUp() {
 
   const { handleSubmit, control, clearErrors } = form;
   const { isError, isPending, isSuccess, mutate } = useSignUp();
+
+  function useSignUp() {
+    return useMutation(
+      {
+        mutationFn: async (data: FormData) => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          const response = await fetch("http://localhost:8080/api/v1/sign-up", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (!response.ok) {
+            throw new Error("Login failed");
+          }
+
+          return response.json();
+        },
+        onSuccess: (res: any) => {
+          console.log("Sign up successful:", res);
+        },
+        onError: (error: any) => {
+          console.error("Sign up error:", error);
+        },
+      },
+      queryClient
+    );
+  }
 
   function onSubmit(data: any) {
     console.log("Validate data: ", data);

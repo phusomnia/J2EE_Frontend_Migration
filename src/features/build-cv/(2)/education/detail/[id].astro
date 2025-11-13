@@ -1,9 +1,0 @@
----
-import RootLayout from '@/layouts/RootLayout.astro';
-import EducationDetailLayout from './EducationDetailLayout';
-const { id } = Astro.params;
----
-
-<RootLayout>
-  <EducationDetailLayout EducationId={id} client:only="react" />
-</RootLayout>

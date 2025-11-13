@@ -7,6 +7,7 @@ import ReactCrop, { type Crop, type PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { metadata } from "@/utils/Api";
 import { FormStore } from "@/stores/FormStore";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ImageCroppingLayout() {
   const { toggleModal } = useDialogStore();
@@ -334,27 +335,21 @@ function CropImage(props: any) {
               completedCrop.height
             )}px`}
         </div>
-
-        <Button
-          onClick={() => {
-            props.onClose();
-          }}
-          variant="outline"
-        >
-          Đóng
-        </Button>
-
         <div className="flex gap-2">
-          <Button
+          {/* <Button
             onClick={handleDownload}
             disabled={!croppedImageUrl}
             variant="outline"
           >
-            Tải ảnh
-          </Button>
-          <Button onClick={handleSaveImage} disabled={!isImageSelected}>
-            Lưu ảnh
-          </Button>
+            Tải ảnh xuống
+          </Button> */}
+          {mutation.isPending ? (
+            <Spinner />
+          ) : (
+            <Button onClick={handleSaveImage} disabled={!isImageSelected}>
+              Lưu ảnh
+            </Button>
+          )}
         </div>
       </div>
     </div>

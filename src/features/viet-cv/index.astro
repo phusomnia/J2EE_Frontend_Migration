@@ -1,0 +1,9 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+import CVTemplate from "./_layout";
+---
+<RootLayout>
+  <div class="min-h-screen bg-gray-50 py-8">
+    <CVTemplate client:only="react" />
+  </div>
+</RootLayout>

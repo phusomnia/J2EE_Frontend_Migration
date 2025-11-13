@@ -31,9 +31,8 @@ export function FormInput({
         control={control}
         render={({ field, fieldState }) => {
           return (
-            <FormItem className={'relative ' + className}>
+            <FormItem className={'relative ' + className + 'flex whitespace-nowrap'}>
               <FormLabel>{placeHolder}</FormLabel>
-
               <FormControl>
                 <Input
                   type={type}
@@ -81,7 +80,7 @@ export function FormDate({
         control={control}
         render={({ field, fieldState }) => {
           return (
-            <FormItem className={'relative ' + className}>
+            <FormItem className={'relative ' + className + 'flex'}>
               <FormLabel>{placeHolder}</FormLabel>
 
               <FormControl>
@@ -150,7 +149,7 @@ export function DatePicker({
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          selected={value || undefined} // Calendar expects Date | undefined
+          selected={value || undefined} 
           onSelect={onChange}
           initialFocus
           disabled={disabled}

@@ -1,9 +1,0 @@
----
-import RootLayout from '@/layouts/RootLayout.astro';
-import SkillDetailLayout from './SkillDetailLayout';
-const { id } = Astro.params;
----
-
-<RootLayout>
-  <SkillDetailLayout SkillId={id} client:only="react" />
-</RootLayout>

@@ -1,22 +1,48 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Metadata from "@/utils/Metadata";
+import { CookiesProvider } from "react-cookie";
+import { AuthProvider, useAuth } from "@/features/(Auth)/AuthProvider";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface HeaderProps {
   className?: string;
 }
 
-export function Header({ className }: HeaderProps) {
+export function HeaderLayout() {
+  return (
+    <>
+      <CookiesProvider>
+        <AuthProvider>
+          <Header />
+        </AuthProvider>
+      </CookiesProvider>
+    </>
+  );
+}
+
+function Header({ className }: HeaderProps) {
+  const { decodedToken } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
-      console.log('Clicked!');
-
+    console.log("Clicked!");
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <header className={cn('bg-white shadow-sm border-b border-gray-200', className)}>
+    <header
+      className={cn("bg-white shadow-sm border-b border-gray-200", className)}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -30,7 +56,7 @@ export function Header({ className }: HeaderProps) {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a
+            {/* <a
               href="/"
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
             >
@@ -53,16 +79,29 @@ export function Header({ className }: HeaderProps) {
               className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
             >
               Build CV
-            </a>
+            </a> */}
           </nav>
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm">
-              Sign In
-            </Button>
+            {decodedToken ? (
+              <>
+                <UserSetting />
+              </>
+            ) : (
+              <>
+                <Button variant="ghost" size="sm">
+                  <a href={`${Metadata.base_url}/sign-in`}>Đăng nhập</a>
+                </Button>
+                <Button variant="ghost" size="sm">
+                  <a href={`${Metadata.base_url}/sign-up`}>Đăng ký</a>
+                </Button>
+              </>
+            )}
             <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-              Get Started
+              <a href={`${Metadata.base_url}/choose-templates`}>
+                Bắt đầu tạo CV
+              </a>
             </Button>
           </div>
 
@@ -75,7 +114,7 @@ export function Header({ className }: HeaderProps) {
               aria-label="Toggle menu"
             >
               <svg
-                className={cn('h-6 w-6', isMobileMenuOpen ? 'hidden' : 'block')}
+                className={cn("h-6 w-6", isMobileMenuOpen ? "hidden" : "block")}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -89,7 +128,7 @@ export function Header({ className }: HeaderProps) {
                 />
               </svg>
               <svg
-                className={cn('h-6 w-6', isMobileMenuOpen ? 'block' : 'hidden')}
+                className={cn("h-6 w-6", isMobileMenuOpen ? "block" : "hidden")}
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -110,8 +149,8 @@ export function Header({ className }: HeaderProps) {
       {/* Mobile Menu */}
       <div
         className={cn(
-          'md:hidden transition-all duration-300 ease-in-out overflow-hidden',
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          "md:hidden transition-all duration-300 ease-in-out overflow-hidden",
+          isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         )}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 border-t border-gray-200">
@@ -151,6 +190,92 @@ export function Header({ className }: HeaderProps) {
       </div>
     </header>
   );
-};
+}
+
+function UserSetting() {
+  const { decodedToken, removeToken } = useAuth();
+
+  const displayName =
+    decodedToken?.fullName ||
+    decodedToken?.username ||
+    decodedToken?.email ||
+    "Tài khoản";
+
+  const avatarUrl = decodedToken?.avatarUrl || "";
+
+  const initials =
+    displayName
+      .split(" ")
+      .map((word: string) => word[0])
+      .join("")
+      .toUpperCase() || "U";
+
+  const handleLogout = () => {
+    removeToken();
+    window.location.href = `${Metadata.base_url}/sign-in`;
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex items-center gap-2 focus:outline-none">
+          <div className="hidden sm:flex flex-col items-end">
+            <span className="text-sm font-medium max-w-[160px] truncate">
+              {displayName}
+            </span>
+          </div>
+          {/* <Avatar className="h-8 w-8 border border-gray-200">
+            <AvatarImage alt={displayName} />
+            <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+          </Avatar> */}
+        </button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent className="w-56" align="end">
+        <DropdownMenuLabel>
+          <div className="flex items-center gap-3">
+            {/* <Avatar className="h-8 w-8">
+              <AvatarImage src={avatarUrl} alt={displayName} />
+              <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+            </Avatar> */}
+            <div className="flex flex-col">
+              <span className="text-sm font-medium truncate">
+                {displayName}
+              </span>
+              {decodedToken?.email && (
+                <span className="text-xs text-gray-500 truncate">
+                  {decodedToken.email}
+                </span>
+              )}
+            </div>
+          </div>
+        </DropdownMenuLabel>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem asChild>
+          <a href={`${Metadata.base_url}/settings`} className="w-full">
+            Cài đặt tài khoản
+          </a>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem asChild>
+          <a href={`${Metadata.base_url}/choose-templates`} className="w-full">
+            CV của tôi
+          </a>
+        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="text-red-500 focus:text-red-600"
+        >
+          Đăng xuất
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export default Header;

@@ -3,22 +3,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import React, { useState } from 'react';
-import { Controller } from 'react-hook-form';
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
-import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
-import { CalendarIcon } from 'lucide-react';
-import { format } from 'date-fns/format';
-import { Calendar } from './ui/calendar';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
+import { Controller } from "react-hook-form";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns/format";
+import { Calendar } from "./ui/calendar";
 
 export function FormInput({
-  className = '',
+  className = "",
   control,
+  disabled = false,
   name,
-  type = 'text',
+  type = "text",
   placeHolder,
   handleChange = () => {},
   clearErrors = () => {},
@@ -31,16 +32,18 @@ export function FormInput({
         control={control}
         render={({ field, fieldState }) => {
           return (
-            <FormItem className={'relative ' + className + 'flex whitespace-nowrap'}>
-              <FormLabel>{placeHolder}</FormLabel>
+            <FormItem
+              className={"relative " + className + "flex whitespace-nowrap"}
+            >
               <FormControl>
                 <Input
+                  disabled={disabled}
                   type={type}
-                  className={fieldState.error?.message && 'border-red-500'}
+                  className={fieldState.error?.message && "border-red-500"}
                   id={name}
                   placeholder={placeHolder}
                   value={field.value}
-                  onChange={e => {
+                  onChange={(e) => {
                     field.onChange(e);
                     handleChange ? handleChange(e) : null;
                     clearErrors(name);
@@ -66,7 +69,7 @@ export function FormInput({
 }
 
 export function FormDate({
-  className = '',
+  className = "",
   control,
   name,
   placeHolder,
@@ -80,17 +83,17 @@ export function FormDate({
         control={control}
         render={({ field, fieldState }) => {
           return (
-            <FormItem className={'relative ' + className + 'flex'}>
+            <FormItem className={"relative " + className + "flex"}>
               <FormLabel>{placeHolder}</FormLabel>
 
               <FormControl>
                 <Input
                   type="date"
-                  className={fieldState.error?.message && 'border-red-500'}
+                  className={fieldState.error?.message && "border-red-500"}
                   id={name}
                   placeholder={placeHolder}
                   value={field.value}
-                  onChange={e => {
+                  onChange={(e) => {
                     field.onChange(e);
                     handleChange(e);
                     clearErrors(name);
@@ -125,7 +128,7 @@ interface DatePickerProps {
 export function DatePicker({
   value,
   onChange,
-  placeholder = 'Pick a date',
+  placeholder = "Pick a date",
   className,
   disabled,
 }: DatePickerProps) {
@@ -133,23 +136,23 @@ export function DatePicker({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={'outline'}
+          variant={"outline"}
           className={cn(
-            'w-full justify-start text-left font-normal',
-            !value && 'text-muted-foreground',
-            className,
+            "w-full justify-start text-left font-normal",
+            !value && "text-muted-foreground",
+            className
           )}
           disabled={disabled}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {value ? format(value, 'PPP') : <span>{placeholder}</span>}
+          {value ? format(value, "PPP") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
 
       <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          selected={value || undefined} 
+          selected={value || undefined}
           onSelect={onChange}
           initialFocus
           disabled={disabled}

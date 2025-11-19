@@ -3,9 +3,23 @@ import { EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
+import { ContentState } from "draft-js";
+import htmlToDraft from "html-to-draftjs";
 
 function MyEditor(props: any) {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  useEffect(() => {
+    if (props.value) {
+      const contentBlock = htmlToDraft(props.value);
+      if (contentBlock) {
+        const contentState = ContentState.createFromBlockArray(
+          contentBlock.contentBlocks
+        );
+        setEditorState(EditorState.createWithContent(contentState));
+      }
+    }
+  }, []);
 
   const onEditorStateChange = (newState: EditorState) => {
     setEditorState(newState);
@@ -36,7 +50,7 @@ function MyEditor(props: any) {
             options: ["bold", "italic", "underline", "strikethrough"],
           },
           list: {
-            options: ["unordered", "ordered"],
+            options: ["unordered"],
           },
           textAlign: {
             options: [],
@@ -140,9 +154,23 @@ export default function Project({
                 </div>
               </div>
               <div>
+                <label>Tên dự án</label>
+                <input
+                  id="ProjectName"
+                  value={fieldsProject(item.Id).ProjectName}
+                  onChange={(e) => handleProject("EDIT", item.Id, e)}
+                  className="mb-2 w-full"
+                  placeholder="Tên dự án"
+                  style={{
+                    fontSize: 15,
+                  }}
+                />
+              </div>
+              <div>
                 <label>Mô tả</label>
                 <MyEditor
                   id="Description"
+                  value={fieldsProject(item.Id).Description}
                   item={item}
                   handleChange={handleProject}
                 />

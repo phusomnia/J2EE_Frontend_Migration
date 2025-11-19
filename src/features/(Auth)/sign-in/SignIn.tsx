@@ -7,6 +7,7 @@ import { formSchema, type FormData } from "./form/SignUpForm";
 import { Spinner } from "@/components/ui/spinner";
 import { toast, Toaster } from "sonner";
 import { queryClient, useMutation } from "@/lib/ReactQuery";
+import Metadata from "@/utils/Metadata";
 
 export function SignIn() {
   const form = useForm<FormData>({
@@ -24,36 +25,34 @@ export function SignIn() {
   function useSignIn() {
     return useMutation(
       {
-        mutationFn: async (data: FormData) => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
-
-          const req = await fetch("http://localhost:8080/api/v1/sign-in", {
+        mutationFn: async (payload: FormData) => {
+          const res = await fetch(`${Metadata.base_api}/sign-in`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(payload),
             credentials: "include",
           });
 
-          const res = await req.json();
-          console.log(res);
-          if (res.statusCode !== 200) {
-            throw new Error(res.message);
+          const data = await res.json();
+
+          if (!res.ok) {
+            throw new Error(data.message);
           }
 
-          return res;
+          return data;
         },
-        onSuccess: (res: any) => {
+        onSuccess: () => {
           toast.success("Đăng nhập thành công!", {
             duration: 3000,
             style: {
               color: "green",
             },
           });
-          console.log("Success:", res);
+          console.log("Success");
         },
-        onError: (error: any) => {
+        onError: (error: Error) => {
           console.log(error);
           toast.error(error.message, {
             duration: 3000,
@@ -73,8 +72,9 @@ export function SignIn() {
     mutate(data);
   }
 
-  function handleGoogleSignIn() {
+  function handleGoogle() {
     console.log("Google sign-in clicked");
+    window.location.href = Metadata.auth_url;
   }
 
   function Status(props: any) {
@@ -114,15 +114,19 @@ export function SignIn() {
                 <Status isPending={isPending} name={"Đăng nhập"} />
               </Button>
             </div>
-            <div>Hoặc đăng nhập bằng:</div>
+            <div>Hoặc</div>
             <div className="col-span-2 flex gap-4 mt-4">
               <Button
                 type="button"
-                onClick={handleGoogleSignIn}
+                onClick={handleGoogle}
                 className="bg-red-500 hover:bg-red-600 text-white"
               >
-                <Status name={"Google"} />
+                Đăng nhập với Google
               </Button>
+            </div>
+            <div>
+              Bạn là người mới ?{" "}
+              <a href={`${Metadata.base_url}/sign-up`}>Đăng ký</a>
             </div>
           </form>
         </Form>

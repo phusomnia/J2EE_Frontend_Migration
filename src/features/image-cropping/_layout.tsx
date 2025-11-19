@@ -5,9 +5,12 @@ import { useDialogStore } from "@/stores/DialogStore";
 import { useRef, useState, useCallback, useEffect } from "react";
 import ReactCrop, { type Crop, type PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { metadata } from "@/utils/Api";
+import Metadata from "@/utils/Metadata";
 import { FormStore } from "@/stores/FormStore";
 import { Spinner } from "@/components/ui/spinner";
+
+const MAX_CROP_SIZE = 200;
+const MIN_CROP_SIZE = 100;
 
 export default function ImageCroppingLayout() {
   const { toggleModal } = useDialogStore();
@@ -20,7 +23,6 @@ export default function ImageCroppingLayout() {
       imageProfileSource.startsWith("https://"))
       ? imageProfileSource
       : null;
-
   console.log(initialCurrentImage);
 
   return (
@@ -75,14 +77,29 @@ function CropImage(props: any) {
 
   const onImageLoad = useCallback((img: HTMLImageElement) => {
     const { width, height } = img;
+
+    const initialSize = Math.min(
+      MAX_CROP_SIZE,
+      Math.max(MIN_CROP_SIZE, Math.min(width, height) * 0.5)
+    );
+
+    const initialX = (width - initialSize) / 2;
+    const initialY = (height - initialSize) / 2;
+
     const initialCrop: Crop = {
       unit: "px",
-      x: 0,
-      y: 0,
-      width: Math.min(width, 300),
-      height: Math.min(height, 300),
+      x: initialX,
+      y: initialY,
+      width: initialSize,
+      height: initialSize,
     };
-    setCrop(initialCrop);
+    setCrop(() => ({
+      ...initialCrop,
+      minWidth: MIN_CROP_SIZE,
+      minHeight: MIN_CROP_SIZE,
+      maxWidth: MAX_CROP_SIZE,
+      maxHeight: MAX_CROP_SIZE,
+    }));
     setCompletedCrop(initialCrop as PixelCrop);
   }, []);
 
@@ -215,10 +232,13 @@ function CropImage(props: any) {
     {
       mutationFn: async (data: FormData) => {
         console.log("Uploading image...");
-        const response = await fetch(`${metadata.url}/storage/upload-image`, {
-          method: "POST",
-          body: data,
-        });
+        const response = await fetch(
+          `${Metadata.base_api}/storage/upload-image`,
+          {
+            method: "POST",
+            body: data,
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Upload failed");
@@ -268,6 +288,10 @@ function CropImage(props: any) {
                   onChange={(_, percentCrop) => setCrop(percentCrop)}
                   onComplete={handleCropComplete}
                   aspect={1}
+                  minWidth={MIN_CROP_SIZE}
+                  minHeight={MIN_CROP_SIZE}
+                  maxWidth={MAX_CROP_SIZE}
+                  maxHeight={MAX_CROP_SIZE}
                   className="max-h-[50vh] border rounded"
                 >
                   <img

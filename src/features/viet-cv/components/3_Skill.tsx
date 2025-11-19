@@ -38,7 +38,7 @@ export default function Education({
       {resume &&
         resume.Skill.map((item: any) => (
           <div key={item.Id} className="education-containers">
-            <div className="relative border p-2">
+            <div className="relative border p-2 grid grid-cols-1">
               <Button
                 type="button"
                 onClick={() => handleSkill("DELETE", item.Id)}
@@ -66,10 +66,10 @@ export default function Education({
                   >
                     Mức độ thành thạo
                   </label>
-                  <input
+                  <textarea
                     id="ProficiencyLevel"
                     value={item.ProficiencyLevel || ""}
-                    className="mb-2 w-[200px]"
+                    className="mb-2 w-[400px]"
                     placeholder="Xuất sắc, Trung bình, ..."
                     onChange={(e) => handleSkill("EDIT", item.Id, e)}
                     style={{

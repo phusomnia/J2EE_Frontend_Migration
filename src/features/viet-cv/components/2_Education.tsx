@@ -68,7 +68,7 @@ export default function Education({
                 <div className="flex">
                   <input
                     id="StartDate"
-                    value={item.StartDate || ""}
+                    value={item.StartDate}
                     onChange={(e) => handleEducation("EDIT", item.Id, e)}
                     className="mb-2 w-[90px]"
                     placeholder="(DD/MM/YYYY)"
@@ -100,19 +100,19 @@ export default function Education({
                   id="Institution"
                   value={item.Institution || ""}
                   className="mb-2 w-[200px]"
-                  placeholder="Trường A"
+                  placeholder="Đại học, cao đẳng, ..."
                   onChange={(e) => handleEducation("EDIT", item.Id, e)}
                   style={{
                     fontSize: 15,
                   }}
                 />
-                <label>Bằng</label>
+                <label>Chuyên ngành</label>
                 <input
                   id="Degree"
                   value={item.Degree || ""}
                   className="mb-2 w-[200px]"
                   onChange={(e) => handleEducation("EDIT", item.Id, e)}
-                  placeholder="Bằng tin học, ..."
+                  placeholder="quản trị kinh doanh, ..."
                   style={{
                     fontSize: 15,
                   }}

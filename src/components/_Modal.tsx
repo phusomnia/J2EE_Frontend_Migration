@@ -3,11 +3,11 @@ import {
   DialogContent,
   DialogDescription,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { useDialogStore } from '@/stores/DialogStore';
-import React from 'react';
+} from "@/components/ui/dialog";
+import { useDialogStore } from "@/stores/DialogStore";
+import React from "react";
 
-export default function Modal(props: any) {
+const Modal = (props: any) => {
   const { isOpen, toggleModal } = useDialogStore();
 
   return (
@@ -19,4 +19,6 @@ export default function Modal(props: any) {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export default Modal;

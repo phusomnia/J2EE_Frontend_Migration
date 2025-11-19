@@ -1,13 +1,19 @@
 import React, { createContext, useContext } from "react";
 
-const ColorContext = createContext("#ef4444");
+const ColorContext = createContext("#000000ff");
 
-const useColorContext = () => useContext(ColorContext)
+export const useColorContext = () => useContext(ColorContext);
 
-export function ColorProvider({ color, children }: { color: string, children: React.ReactNode }) {
-    return <>
-        <ColorContext.Provider value={color}>
-            {children}
-        </ColorContext.Provider>
+export function ColorProvider({
+  color,
+  children,
+}: {
+  color: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <ColorContext.Provider value={color}>{children}</ColorContext.Provider>
     </>
+  );
 }

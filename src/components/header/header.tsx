@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Metadata from "@/utils/Metadata";
-import { CookiesProvider } from "react-cookie";
-import { AuthProvider, useAuth } from "@/features/(Auth)/AuthProvider";
+import { AuthProvider } from "@/context/auth/AuthProvider";
+import { useAuth } from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AuthLayout from "@/layouts/AuthLayout";
 
 interface HeaderProps {
   className?: string;
@@ -21,17 +22,16 @@ interface HeaderProps {
 export function HeaderLayout() {
   return (
     <>
-      <CookiesProvider>
-        <AuthProvider>
-          <Header />
-        </AuthProvider>
-      </CookiesProvider>
+      <AuthLayout>
+        <Header />
+      </AuthLayout>
     </>
   );
 }
 
 function Header({ className }: HeaderProps) {
-  const { decodedToken } = useAuth();
+  const { user } = useAuth();
+  console.log(user);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -84,7 +84,7 @@ function Header({ className }: HeaderProps) {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            {decodedToken ? (
+            {user ? (
               <>
                 <UserSetting />
               </>
@@ -193,27 +193,7 @@ function Header({ className }: HeaderProps) {
 }
 
 function UserSetting() {
-  const { decodedToken, removeToken } = useAuth();
-
-  const displayName =
-    decodedToken?.fullName ||
-    decodedToken?.username ||
-    decodedToken?.email ||
-    "Tài khoản";
-
-  const avatarUrl = decodedToken?.avatarUrl || "";
-
-  const initials =
-    displayName
-      .split(" ")
-      .map((word: string) => word[0])
-      .join("")
-      .toUpperCase() || "U";
-
-  const handleLogout = () => {
-    removeToken();
-    window.location.href = `${Metadata.base_url}/sign-in`;
-  };
+  const { user } = useAuth();
 
   return (
     <DropdownMenu>
@@ -221,7 +201,7 @@ function UserSetting() {
         <button className="flex items-center gap-2 focus:outline-none">
           <div className="hidden sm:flex flex-col items-end">
             <span className="text-sm font-medium max-w-[160px] truncate">
-              {displayName}
+              {user.username}
             </span>
           </div>
           {/* <Avatar className="h-8 w-8 border border-gray-200">
@@ -239,12 +219,10 @@ function UserSetting() {
               <AvatarFallback className="text-xs">{initials}</AvatarFallback>
             </Avatar> */}
             <div className="flex flex-col">
-              <span className="text-sm font-medium truncate">
-                {displayName}
-              </span>
-              {decodedToken?.email && (
+              {/* <span className="text-sm font-medium truncate">{user}</span> */}
+              {user?.email && (
                 <span className="text-xs text-gray-500 truncate">
-                  {decodedToken.email}
+                  {user.email}
                 </span>
               )}
             </div>
@@ -268,7 +246,7 @@ function UserSetting() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          onClick={handleLogout}
+          // onClick={handleLogout}
           className="text-red-500 focus:text-red-600"
         >
           Đăng xuất

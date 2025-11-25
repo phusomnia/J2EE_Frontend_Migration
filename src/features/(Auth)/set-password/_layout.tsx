@@ -9,8 +9,9 @@ import { Spinner } from "@/components/ui/spinner";
 import { queryClient, useMutation } from "@/lib/ReactQuery";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { AuthProvider } from "@/features/(Auth)/AuthProvider";
+import { AuthProvider } from "@/context/auth/AuthProvider";
 import { CookiesProvider } from "react-cookie";
+import { navigate } from "astro:transitions/client";
 
 export function SetPasswordLayout() {
   return (
@@ -71,7 +72,7 @@ function useSetPassword() {
           },
         });
         setTimeout(() => {
-          window.location.href = "/";
+          navigate("/");
         }, 1000);
       },
       onError: (error: Error) => {

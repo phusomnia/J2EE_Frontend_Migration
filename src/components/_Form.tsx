@@ -18,6 +18,7 @@ export function FormInput({
   className = "",
   control,
   disabled = false,
+  value = "",
   name,
   type = "text",
   placeHolder,
@@ -42,7 +43,7 @@ export function FormInput({
                   className={fieldState.error?.message && "border-red-500"}
                   id={name}
                   placeholder={placeHolder}
-                  value={field.value}
+                  value={field.value || value}
                   onChange={(e) => {
                     field.onChange(e);
                     handleChange ? handleChange(e) : null;

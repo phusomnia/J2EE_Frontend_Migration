@@ -7,8 +7,10 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AuthProvider, useAuth } from "@/features/(Auth)/AuthProvider";
-import { CookiesProvider } from "react-cookie";
+import { useAuth } from "@/hooks/useAuth";
+import AuthLayout from "@/layouts/AuthLayout";
+import { useEffect } from "react";
+import { navigate } from "astro:transitions/client";
 
 const VNNumberRegex =
   /^(0|\+84)(3[2-9]|5[2689]|7[06-9]|8[1-689]|9[0-46-9])[0-9]{7}$/;
@@ -43,24 +45,24 @@ type PasswordFormValues = z.infer<typeof passwordSchema>;
 export function SettingsLayout() {
   return (
     <>
-      <CookiesProvider>
-        <AuthProvider>
-          <Settings />
-        </AuthProvider>
-      </CookiesProvider>
+      <AuthLayout>
+        <Settings />
+      </AuthLayout>
     </>
   );
 }
 
 function Settings() {
-  const { token, decodedToken } = useAuth();
+  const { user, isAuthenticated } = useAuth();
+
+  console.log(user);
 
   const profileForm = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      username: decodedToken?.username ?? "",
-      phone: decodedToken?.phone ?? "",
-      email: decodedToken?.email ?? "",
+      username: user?.username || "",
+      phone: "",
+      email: "",
     },
     mode: "onSubmit",
     reValidateMode: "onSubmit",
@@ -76,6 +78,16 @@ function Settings() {
     mode: "onSubmit",
     reValidateMode: "onSubmit",
   });
+
+  useEffect(() => {
+    if (user) {
+      profileForm.reset({
+        username: user.username || "",
+        phone: user.phone || "",
+        email: user.email || "",
+      });
+    }
+  }, [user]);
 
   const {
     control: profileControl,

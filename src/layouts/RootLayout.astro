@@ -1,6 +1,7 @@
 ---
 import '@/styles/global.css';
 import { QueryProvider } from './QueryProvider';
+import { AuthProvider } from '@/context/auth/AuthProvider';
 ---
 
 <html lang="vi">
@@ -9,7 +10,7 @@ import { QueryProvider } from './QueryProvider';
     <style></style>
     <meta name="viewport" content="width=device-width" />
   </head>
-  <body>
+  <body>    
     <QueryProvider>
       <slot/>
     </QueryProvider>

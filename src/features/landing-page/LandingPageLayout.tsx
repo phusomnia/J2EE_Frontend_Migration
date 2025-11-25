@@ -22,7 +22,7 @@ export function LandingPage() {
               <div className="space-y-4">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900">
                   Tạo sơ yếu lý lịch
-                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <span className="px-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                     chuyên nghiệp
                   </span>
                 </h1>
@@ -38,7 +38,7 @@ export function LandingPage() {
                 </button>
                 <div className="relative">
                   <button className="w-full px-8 py-4 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:from-blue-600 hover:to-purple-700 hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md">
-                    Nâng cấp CV với AI
+                    <a href="/chat">Nâng cấp CV với AI</a>
                   </button>
                   <div className="absolute -top-2 -right-2 px-2 py-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full animate-pulse">
                     NEW
@@ -47,7 +47,7 @@ export function LandingPage() {
               </div>
 
               {/* Stats */}
-              <div className="flex gap-8 pt-4">
+              {/* <div className="flex gap-8 pt-4">
                 <div>
                   <div className="text-3xl font-bold text-gray-900">10K+</div>
                   <div className="text-sm text-gray-600">Người dùng</div>
@@ -60,7 +60,7 @@ export function LandingPage() {
                   <div className="text-3xl font-bold text-gray-900">95%</div>
                   <div className="text-sm text-gray-600">Hài lòng</div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Hero Image */}

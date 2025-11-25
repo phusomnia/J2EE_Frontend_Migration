@@ -8,8 +8,22 @@ import { Spinner } from "@/components/ui/spinner";
 import { toast, Toaster } from "sonner";
 import { queryClient, useMutation } from "@/lib/ReactQuery";
 import Metadata from "@/utils/Metadata";
+import { useAuth } from "@/hooks/useAuth";
+import { signIn, initialize } from "@/context/auth/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import { navigate } from "astro:transitions/client";
+
+interface User {
+  phone?: string;
+  role?: string;
+  email?: string;
+  username?: string;
+  sub?: string;
+}
 
 export function SignIn() {
+  const { dispatch } = useAuth();
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,14 +57,21 @@ export function SignIn() {
 
           return data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
           toast.success("Đăng nhập thành công!", {
             duration: 3000,
             style: {
               color: "green",
             },
           });
-          console.log("Success");
+          localStorage.setItem("ACCESS_TOKEN", data.content);
+          dispatch(
+            initialize({
+              isAuthenticated: true,
+              user: jwtDecode(data.content),
+            })
+          );
+          navigate("/");
         },
         onError: (error: Error) => {
           console.log(error);

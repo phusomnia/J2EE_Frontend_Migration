@@ -179,7 +179,7 @@ function ChatBot() {
     }));
   };
 
-  const handleSendMessage = async (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const userMessage: Message = {

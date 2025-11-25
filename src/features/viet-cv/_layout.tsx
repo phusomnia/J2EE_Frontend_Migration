@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef} from "react";
 import { FormStore } from "@/stores/FormStore";
 import Education from "./components/2_Education";
 import Project from "./components/4_Project";
@@ -9,7 +9,51 @@ import ImageCroppingLayout from "../image-cropping/_layout";
 import no_image from "@/../public/no_image.png";
 import { templates } from "@/stores/TemplateStore";
 import { printHtml } from "@/styles/print";
+import axios from "axios";
 
+import { queryClient, useMutation } from "@/lib/ReactQuery";
+import Metadata from "@/utils/Metadata";
+import { toast } from "sonner";
+import { QueryClient } from "@tanstack/react-query";
+
+export function usePostResume() {
+  return useMutation({
+    mutationFn: async (resumeData: any) => {
+      const res = await fetch(`${Metadata.base_api}/resumes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resumeData),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Đăng tải resume thất bại");
+      }
+
+      return data;
+    },
+    onSuccess: (data) => {
+      toast.success("Resume đã được gửi thành công!", {
+        duration: 3000,
+        style: { color: "green" },
+      });
+
+      console.log("Resume posted:", data);
+
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Có lỗi xảy ra", {
+        duration: 3000,
+        style: { color: "red" },
+      });
+      console.error("Post resume error:", error);
+    },
+  },queryClient);
+}
 export default function CVTemplate() {
   const {
     formValue,
@@ -121,9 +165,21 @@ export default function CVTemplate() {
     }
   };
 
+  const { mutate } = usePostResume();
+
   const handleSaveInfo = (payload: object) => {
-    console.log("Save info", { ...payload });
+    console.log("Save info", payload);
+
+    mutate(payload, {
+      onSuccess: (data) => {
+        console.log("Tạo resume thành công:", data);
+      },
+      onError: (err) => {
+        console.error("Lỗi API:", err);
+      },
+    });
   };
+
 
   const getSelectedTemplate = () => {
     const template = localStorage.getItem("template-storage");
@@ -304,7 +360,9 @@ export default function CVTemplate() {
             }}
           >
             <ScaleProvider scale={1}>
-              <selectedTemplate.component resume={formValue} style={style} />
+              {selectedTemplate?.component && (
+                <selectedTemplate.component resume={formValue} style={style} />
+              )}
             </ScaleProvider>
           </div>
         </div>
